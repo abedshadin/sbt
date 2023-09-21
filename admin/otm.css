@@ -95,3 +95,14 @@ input {
 .closed {
     background-color: red;
 }
+
+    .print-only {
+        display: none; /* Hide the content by default */
+    }
+
+    @media print {
+        .print-only {
+            display: block; /* Display the content when printing */
+        }
+    }
+

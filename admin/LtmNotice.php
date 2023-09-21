@@ -152,6 +152,7 @@ if (isset($_POST['mod'])) {
         
         if (mysqli_query($con, $query)) {
             $_SESSION['success'] = "Data has been added successfully";
+            header("location: index.php");
         } else {
             echo "Error: " . mysqli_error($con);
         }

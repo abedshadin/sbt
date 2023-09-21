@@ -36,10 +36,11 @@ if (isset($_GET['logout'])) {
 </head>
 <body>
 
-<div class="home_header">
+<div class="home_header print-hidden">
         <h2>Admin Panel</h2>
     </div>
     <div class="home_content">
+        <div class="print-hidden">
     <?php
 
 
@@ -88,13 +89,15 @@ $search_value=$_SESSION["admin_name"];
     <br>
     <br>
     <center>
-        <div class="">
+
+    </div>
+        <div class="print-visible">
             <!-- OTM Table -->
             <?php
             $s = mysqli_query($con, "select * from otm order by sl_no");
             ?>
 
-            <table width="100%" class="table-bordered m-auto text-center" id="data-table">
+<table width="100%" class="table-bordered m-auto text-center" id="data-table">
                 <tr class="bg-success">
                     <th colspan="14">OTM</th>
                 </tr>
@@ -111,8 +114,8 @@ $search_value=$_SESSION["admin_name"];
                     <th>YTO</th>
                     <th>Credit Line</th>
                     <th>Tender Capacity</th>
-                    <th>Edit</th>
-                    <th>Del</th>
+                    <th class="print-hidden">Edit</th>
+                    <th class="print-hidden">Del</th>
                 </tr>
 
                 <?php
@@ -148,23 +151,24 @@ $search_value=$_SESSION["admin_name"];
                             <?php echo $r['c_date_t']; ?>
                         </td>
                         <td class="text-center h6">
-                            <?php echo $r['s_ex']; ?>
+    <?php echo $r['s_ex'] . " Crore"; ?>
+</td>
+                        <td class="text-center h6">
+                            <?php echo $r['yto'] . " Crore";; ?>
                         </td>
                         <td class="text-center h6">
-                            <?php echo $r['yto']; ?>
+                            <?php echo $r['credit_l'] . " Crore";; ?>
                         </td>
-                        <td class="text-center h6">
-                            <?php echo $r['credit_l']; ?>
+                        <td class="text-center h6 ">
+                            <?php echo $r['tender_c'] . " Crore";; ?>
                         </td>
-                        <td class="text-center h6">
-                            <?php echo $r['tender_c']; ?>
-                        </td>
-                        <td>
-                 <a class="btn" href="editOTM.php?i=<?php echo $r['sl_no']; ?>">✏️</a>
-             </td>
-             <td>
-                 <a class="btn" href="delOTM.php?i=<?php echo $r['sl_no']; ?>">✖</a>
-             </td>
+                        <td class="print-hidden">
+    <a class="btn" href="editOTM.php?i=<?php echo $r['sl_no']; ?>">✏️</a>
+</td>
+<td class="print-hidden">
+    <a class="btn" href="delOTM.php?i=<?php echo $r['sl_no']; ?>">✖</a>
+</td>
+
                     </tr>
                 <?php
                 }
@@ -195,8 +199,8 @@ include('db.php');
         <th>Closing Date Time</th>
         <th>Liquid</th>
         <th>Estimate Cost</th>
-        <th>Edit</th>
-        <th>Del</th>
+        <th class="print-hidden">Edit</th>
+        <th class="print-hidden">Del</th>
     </tr>
 
     <?php
@@ -231,17 +235,17 @@ include('db.php');
                  <?php echo $r['c_date_t']; ?>
              </td>
              <td class="text-center h6">
-                 <?php echo $r['liquid']; ?>
+                 <?php echo $r['liquid'] . " Lakh";; ?>
              </td>
              <td class="text-center h6">
                  <?php echo $r['est_cost']; ?>
              </td>
-             <td>
-                 <a class="btn" href="editLTM.php?i=<?php echo $r['sl_no']; ?>">✏️</a>
-             </td>
-             <td>
-                 <a class="btn" href="delLTM.php?i=<?php echo $r['sl_no']; ?>">✖</a>
-             </td>
+             <td class="print-hidden">
+    <a class="btn" href="editLTM.php?i=<?php echo $r['sl_no']; ?>">✏️</a>
+</td>
+<td class="print-hidden">
+    <a class="btn" href="delLTM.php?i=<?php echo $r['sl_no']; ?>">✖</a>
+</td>
              </tr>
                <?php
          }
@@ -253,11 +257,56 @@ include('db.php');
 
     </center>
     <center>
-      
+
+  
+    <button id="printButton" class="btn btn-primary print-hidden">Print OTM and LTM Tables</button>
       <br>
-                <a href="index.php?logout='1'" style="color: red;">
+                <a class="print-hidden" href="index.php?logout='1'" style="color: red;">
                     Logout
                 </a>
             </center>
+        </div>
+        <br>
+        <center> <div class="fixed print-only"><p>এখানে E-GP এর যাবতীয় কাজ করা হয়। নেসার্স সিনথি নিউটেক, প্রোঃ রাসেল ইনাম শান্ত, নিউমার্কেট, শেরপুর টাউন, শেরপুর-২১০০। নোবাইলঃ ০১৭২৩-৬০১৯৩৮/০১৬১২-৩৮৭৮৪২ শান্ত</p></div></center>
+           
+            <script>
+document.getElementById("printButton").addEventListener("click", function() {
+
+    // Hide elements you don't want to print
+    var elementsToHide = document.querySelectorAll(".print-hidden");
+    for (var i = 0; i < elementsToHide.length; i++) {
+        elementsToHide[i].style.display = "none";
+    }
+
+    // Show the tables you want to print
+    var tablesToShow = document.querySelectorAll(".print-visible");
+    for (var i = 0; i < tablesToShow.length; i++) {
+        tablesToShow[i].style.display = "table"; // Show tables
+    }
+
+    // Apply landscape mode for printing
+    var style = document.createElement("style");
+    style.innerHTML = "@page { size: landscape; }";
+    document.head.appendChild(style);
+
+    // Trigger the print dialog
+    window.print();
+ 
+    // Remove the landscape mode CSS
+    document.head.removeChild(style);
+
+    // Restore the original display styles
+    for (var i = 0; i < elementsToHide.length; i++) {
+        elementsToHide[i].style.display = "table-cell"; // Restore original display style
+    }
+    for (var i = 0; i < tablesToShow.length; i++) {
+        tablesToShow[i].style.display = "none"; // Hide tables
+    }
+
+    
+});
+</script>
+
+
     </body>
 </html>
