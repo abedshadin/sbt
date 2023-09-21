@@ -2,39 +2,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>
-        Login and Registration
-        System - LAMP Stack
-    </title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css"
-            href="./style.css">
+<title>Admin Panel</title>
+</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link rel="stylesheet" href="./otm.css">
+
 </head>
 <body>
-    <div class="header">
+    <div class="home_header">
         <h2>Login Here!</h2>
     </div>
-<div class="log">
-    <form method="post" action="login.php">
+    <center>
+<div class="home_content ">
+    <form method="post" class="m-auto text-center" action="login.php">
 <div class="error">
 
-After Registar Need Admin Approval For Login</div>
+After Registar Need Admin Approval For Login
+</div>
         <?php include('errors.php'); ?>
 
         <div class="input-group">
-            <label>Enter Username</label>
+            <label>Enter Username</label><br>
             <input type="text" name="admin_name" >
         </div>
         <div class="input-group">
-            <label>Enter Password</label>
+            <label>Enter Password</label><br>
             <input type="password" name="password">
         </div>
         <div class="input-group">
-            <button type="submit" class="btn"
+            <button type="submit" class="btn btn-primary"
                         name="login_admin">
                 Login
             </button>
         </div>
+   
 
 
 
@@ -49,6 +50,8 @@ After Registar Need Admin Approval For Login</div>
 
     </form>
     </div>
+    </center>
+  
 </body>
 
 </html>

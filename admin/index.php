@@ -1,6 +1,6 @@
 <?php include('db.php') ?>
 <?php
-
+date_default_timezone_set('Asia/Dhaka');
 // Starting the session, to use and
 // store data in session variable
 session_start();
@@ -116,11 +116,12 @@ $search_value=$_SESSION["admin_name"];
                 </tr>
 
                 <?php
-                while ($r = mysqli_fetch_array($s)) {
-                    $closingTime = strtotime($r['c_date_t']);
-                    $currentTime = time();
-                    $rowClass = ($currentTime > $closingTime) ? 'closed' : '';
-                    ?>
+              while ($r = mysqli_fetch_array($s)) {
+                $closingTime = strtotime($r['c_date_t']);
+                $currentTime = time();
+                $rowClass = ($currentTime >= $closingTime) ? 'closed' : '';
+            
+                ?>
                     <tr class="<?php echo $rowClass; ?>">
                         <td class="text-center h6">
                             <?php echo $r['sl_no']; ?>
